@@ -1,6 +1,8 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import WebGL from 'three/examples/jsm/capabilities/WebGL';
+import Stats from 'three/examples/jsm/libs/stats.module';
+import { GUI } from 'dat.gui';
 
 declare global {
   interface Window {
@@ -13,7 +15,7 @@ class App {
   scene?: THREE.Scene;
   renderer?: THREE.WebGLRenderer;
   mesh?: THREE.Mesh;
-  controls?: OrbitControls;
+  stats?: Stats;
 
   constructor() {
     const container = document.createElement('div');
@@ -56,7 +58,25 @@ class App {
 
     this.mesh = new THREE.Mesh(geometry, material);
     this.scene.add(this.mesh);
-    this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+    const controls = new OrbitControls(this.camera, this.renderer.domElement);
+
+    const stats = Stats();
+    document.body.appendChild(stats.dom);
+
+    const gui = new GUI({ autoPlace: false });
+    // mesh
+    const cubeFolder = gui.addFolder('Cube');
+    cubeFolder.add(this.mesh?.rotation, 'x', 0, Math.PI * 2);
+    cubeFolder.add(this.mesh?.rotation, 'y', 0, Math.PI * 2);
+    cubeFolder.add(this.mesh?.rotation, 'z', 0, Math.PI * 2);
+    cubeFolder.open();
+    // camera
+    const cameraFolder = gui.addFolder('Camera');
+    cameraFolder.add(this.camera?.position, 'z', 0, 10);
+    cameraFolder.open();
+    gui.domElement.classList.add('gui');
+    document.body.appendChild(gui.domElement);
+
     this.renderer.setAnimationLoop(this.render.bind(this));
     window.addEventListener('resize', this.resize.bind(this));
   }
@@ -73,6 +93,7 @@ class App {
     if (this.renderer && this.mesh && this.scene && this.camera) {
       this.mesh.rotateY(0.01);
       this.renderer.render(this.scene, this.camera);
+      this.stats?.update();
     }
   }
 }
