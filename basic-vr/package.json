@@ -1,0 +1,32 @@
+{
+  "name": "threejs-practice",
+  "version": "0.1.0",
+  "description": "",
+  "main": "none",
+  "scripts": {
+    "dev": "webpack serve",
+    "build": "webpack --mode=production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KalpasWang/threejs-practice.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/KalpasWang/threejs-practice/issues"
+  },
+  "homepage": "https://github.com/KalpasWang/threejs-practice#readme",
+  "dependencies": {
+    "dat.gui": "^0.7.9",
+    "three": "^0.149.0"
+  },
+  "devDependencies": {
+    "@types/dat.gui": "^0.7.7",
+    "@types/three": "^0.149.0",
+    "ts-loader": "^9.4.2",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1",
+    "webpack-dev-server": "^4.11.1"
+  }
+}
